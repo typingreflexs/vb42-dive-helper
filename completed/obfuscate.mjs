@@ -4,14 +4,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
-const input = path.join(dir, "AutoDive_Matcha.lua");
-const inputFallback = path.join(dir, "..", "AutoDive_Matcha.lua");
-const sourcePath = fs.existsSync(input) ? input : inputFallback;
-const output = path.join(dir, "AutoDive_Matcha.obf.lua");
 
-const source = fs.readFileSync(sourcePath, "utf8").replace(/^\uFEFF/, "");
-const key = crypto.randomBytes(24);
-const encoded = Buffer.from(source, "utf8").map((b, i) => (b + key[i % key.length]) % 256);
+const BUILDS = [
+	{ label: "matcha-vb42", output: "AutoDive_Matcha.obf.lua", input: "AutoDive_Matcha.lua", fallback: "../AutoDive_Matcha.lua" },
+	{ label: "matcha-fisch", output: "Fisch_Matcha.obf.lua", input: "Fisch_Matcha.lua", fallback: "../Fisch_Matcha.lua" },
+];
 
 function randName(len = 10) {
 	const chars = "_IlO";
@@ -20,20 +17,24 @@ function randName(len = 10) {
 	return s;
 }
 
-const [nK, nD, nA, nB, nC, nE, nF, nG, nH, nI, nL, nM] = Array.from({ length: 12 }, () =>
-	randName(8 + Math.floor(Math.random() * 5)),
-);
+function obfuscate(source, label) {
+	const key = crypto.randomBytes(24);
+	const encoded = Buffer.from(source, "utf8").map((b, i) => (b + key[i % key.length]) % 256);
 
-const chunks = [];
-const chunkSize = 48 + Math.floor(Math.random() * 32);
-for (let i = 0; i < encoded.length; i += chunkSize) {
-	chunks.push(Array.from(encoded.subarray(i, i + chunkSize)));
-}
+	const [nK, nD, nA, nB, nC, nE, nF, nG, nH, nI, nL, nM] = Array.from({ length: 12 }, () =>
+		randName(8 + Math.floor(Math.random() * 5)),
+	);
 
-const keyLua = "{" + Array.from(key).join(",") + "}";
-const chunkLua = chunks.map((c) => "{" + c.join(",") + "}").join(",");
+	const chunks = [];
+	const chunkSize = 48 + Math.floor(Math.random() * 32);
+	for (let i = 0; i < encoded.length; i += chunkSize) {
+		chunks.push(Array.from(encoded.subarray(i, i + chunkSize)));
+	}
 
-const loader = `-- obfuscated | matcha | build v3
+	const keyLua = "{" + Array.from(key).join(",") + "}";
+	const chunkLua = chunks.map((c) => "{" + c.join(",") + "}").join(",");
+
+	const loader = `-- obfuscated | ${label} | build v3
 return (function(${nK},${nD})
 local ${nA},${nB},${nC},${nE},${nF},${nG},${nH},${nI},${nL},${nM}=string.char,table.concat,loadstring or load,0,0,0,{},0,"",""
 for ${nF}=1,#${nD} do
@@ -50,18 +51,27 @@ return ${nI}()
 end)(${keyLua},{${chunkLua}})
 `;
 
-fs.writeFileSync(output, loader, "utf8");
-
-let decoded = Buffer.alloc(encoded.length);
-let idx = 0;
-for (const c of chunks) {
-	for (const b of c) {
-		decoded[idx] = (b - key[idx % key.length] + 256) % 256;
-		idx++;
+	let decoded = Buffer.alloc(encoded.length);
+	let idx = 0;
+	for (const c of chunks) {
+		for (const b of c) {
+			decoded[idx] = (b - key[idx % key.length] + 256) % 256;
+			idx++;
+		}
 	}
-}
-const roundtrip = decoded.toString("utf8") === source;
-if (!roundtrip) throw new Error("roundtrip verify failed");
+	if (decoded.toString("utf8") !== source) throw new Error(`roundtrip verify failed for ${label}`);
 
-console.log("Wrote", output);
-console.log("Bytes:", encoded.length, "Chunks:", chunks.length, "Verified: OK");
+	return { loader, bytes: encoded.length, chunks: chunks.length };
+}
+
+for (const build of BUILDS) {
+	const input = path.join(dir, build.input);
+	const inputFallback = path.join(dir, build.fallback);
+	const sourcePath = fs.existsSync(input) ? input : inputFallback;
+	const output = path.join(dir, build.output);
+	const source = fs.readFileSync(sourcePath, "utf8").replace(/^\uFEFF/, "");
+	const { loader, bytes, chunks } = obfuscate(source, build.label);
+	fs.writeFileSync(output, loader, "utf8");
+	console.log("Wrote", output);
+	console.log("Bytes:", bytes, "Chunks:", chunks, "Verified: OK");
+}

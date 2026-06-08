@@ -18,6 +18,13 @@ key needed first time
 loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/typingreflexs/vb42-dive-helper@main/RacketRivals.obf.lua"))()
 ```
 
+fisch matcha version (matcha only, drawing ui)
+auto equip, cast, shake, instant reel
+
+```lua
+loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/typingreflexs/vb42-dive-helper@main/completed/Fisch_Matcha.obf.lua"))()
+```
+
 vb42 matcha version (matcha only, drawing ui)
 
 ```lua

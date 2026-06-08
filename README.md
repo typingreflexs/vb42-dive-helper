@@ -36,6 +36,16 @@ Matcha-only. Custom Drawing overlay, no Rayfield.
 
 ---
 
+## Fisch — Matcha (Drawing UI)
+
+```lua
+loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/typingreflexs/vb42-dive-helper@main/completed/Fisch_Matcha.obf.lua"))()
+```
+
+Auto equip rod, cast, shake, instant reel. Matcha only.
+
+---
+
 ## Jujutsu Shenanigans — Executor (Rayfield)
 
 ```lua
