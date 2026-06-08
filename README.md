@@ -42,7 +42,7 @@ Matcha-only. Custom Drawing overlay, no Rayfield.
 loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/typingreflexs/vb42-dive-helper@main/JJS.obf.lua"))()
 ```
 
-Auto M1, block, dash, burst, player ESP. Key required on first load.
+Auto M1, block, BF chain (Yuji), perfect switch (Todo), ratio (Nanami), lawyer QTE, ESP. Key required on first load.
 
 ---
 

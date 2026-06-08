@@ -25,7 +25,7 @@ loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/typingreflexs/vb42-dive-hel
 ```
 
 jujutsu shenanigans (executor / rayfield)
-auto m1, block, dash, burst, player esp
+auto m1, block, bf chain, perfect switch, ratio, lawyer qte, esp
 key needed first time
 
 ```lua
