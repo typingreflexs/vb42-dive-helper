@@ -1,6 +1,6 @@
 # vb42-dive-helper
 
-Scripts by **03zl** — Volleyball 4.2, Racket Rivals, and Matcha builds.
+Scripts by **[scammed.wtf](https://discord.gg/CM4mcqxZnP)** — Volleyball 4.2, Racket Rivals, and Matcha builds.
 
 **Repo:** https://github.com/typingreflexs/vb42-dive-helper
 

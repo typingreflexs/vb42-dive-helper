@@ -5,9 +5,11 @@ import { fileURLToPath } from "url";
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const input = path.join(dir, "AutoDive_Matcha.lua");
+const inputFallback = path.join(dir, "..", "AutoDive_Matcha.lua");
+const sourcePath = fs.existsSync(input) ? input : inputFallback;
 const output = path.join(dir, "AutoDive_Matcha.obf.lua");
 
-const source = fs.readFileSync(input, "utf8").replace(/^\uFEFF/, "");
+const source = fs.readFileSync(sourcePath, "utf8").replace(/^\uFEFF/, "");
 const key = crypto.randomBytes(24);
 const encoded = Buffer.from(source, "utf8").map((b, i) => (b + key[i % key.length]) % 256);
 
