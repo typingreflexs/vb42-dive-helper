@@ -8,6 +8,7 @@ const dir = path.dirname(fileURLToPath(import.meta.url));
 const BUILDS = [
 	{ input: "AutoDive.lua", output: "AutoDive.obf.lua", label: "executor" },
 	{ input: "RacketRivals.lua", output: "RacketRivals.obf.lua", label: "racket" },
+	{ input: "JJS.lua", output: "JJS.obf.lua", label: "jjs" },
 ];
 
 function randName(len = 10) {

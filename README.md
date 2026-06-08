@@ -36,6 +36,16 @@ Matcha-only. Custom Drawing overlay, no Rayfield.
 
 ---
 
+## Jujutsu Shenanigans — Executor (Rayfield)
+
+```lua
+loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/typingreflexs/vb42-dive-helper@main/JJS.obf.lua"))()
+```
+
+Auto M1, block, dash, burst, player ESP. Key required on first load.
+
+---
+
 ## Build obfuscated files
 
 From repo root (sources stay local, not committed):
