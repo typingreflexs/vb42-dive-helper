@@ -2,16 +2,18 @@
 
 Obfuscated auto-dive helper for Volleyball 4.2 (Matcha).
 
-## Raw load URL
+## Raw load URL (use jsDelivr — GitHub raw CDN can lag)
 
 ```
-https://raw.githubusercontent.com/typingreflexs/vb42-dive-helper/main/AutoDive_Matcha.obf.lua
+https://cdn.jsdelivr.net/gh/typingreflexs/vb42-dive-helper@main/AutoDive_Matcha.obf.lua
 ```
+
+Line 1 must say `build v3`. If you still see `10OlOOOI` on line 3, you have a cached old copy.
 
 ## Executor
 
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/typingreflexs/vb42-dive-helper/main/AutoDive_Matcha.obf.lua"))()
+loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/typingreflexs/vb42-dive-helper@main/AutoDive_Matcha.obf.lua"))()
 ```
 
 ## Matcha
