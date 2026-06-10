@@ -5,5 +5,6 @@ if not src or #src < 32 then
 	error('flag: HttpGet failed — use game:HttpGet(url, "") in Matcha', 0)
 end
 local fn, err = loadstring(src, "flag")
+if not fn and load then fn, err = load(src, "flag") end
 if not fn then error("flag: " .. tostring(err), 0) end
 return fn()
